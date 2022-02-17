@@ -12,12 +12,12 @@ UC_Character::UC_Character()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-  GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FQuat(FRotator(0.0f, -90.0f, 0.0f)));
-	GetCharacterMovement()->bOrientRotationToMovement = true;
+    //GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FQuat(FRotator(0.0f, -90.0f, 0.0f)));
+	//GetCharacterMovement()->bOrientRotationToMovement = true;
 
-	GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	//GetCharacterMovement()->bUseControllerDesiredRotation = true;
 
-	GetCharacterMovement()->bIgnoreBaseRotation = true;
+	//GetCharacterMovement()->bIgnoreBaseRotation = true;
 
 	// ...
 }
@@ -48,11 +48,11 @@ void UC_Character::MoveForward(float AxisValue)
   {
     // Find out which way is forward
 
-    const FRotator YawRotation(0, Rotation.Yaw, 0);
+    //const FRotator YawRotation(0, Rotation.Yaw, 0);
 
     // Get forward vector
-    const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-    AddMovementInput(Direction, AxisValue);
+    //const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+    //AddMovementInput(Direction, AxisValue);
   }
 }
 
@@ -62,13 +62,13 @@ void UC_Character::MoveRight(float AxisValue)
   {
     // Find out which way is right
     
-    const FRotator YawRotation(0, Rotation.Yaw, 0);
+    //const FRotator YawRotation(0, Rotation.Yaw, 0);
 
     // Get right vector 
-    const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+    //const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
     // Add movement in that direction
-    AddMovementInput(Direction, AxisValue);
+    //AddMovementInput(Direction, AxisValue);
   }
 }
 

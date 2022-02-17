@@ -1,6 +1,11 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+# Heavy Assets
+Content/Assets/Wraith
+Content/Assets/LtBelica
+Content/ParagonLtBelica
+Content/ParagonWraith
 # Compiled Object files
 *.slo
 *.lo
