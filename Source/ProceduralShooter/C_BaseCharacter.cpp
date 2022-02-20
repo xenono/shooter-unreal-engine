@@ -33,15 +33,27 @@ void AC_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis(TEXT("MoveSideways"), this, &AC_BaseCharacter::MoveSideways);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis(TEXT("LookSideways"), this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Pressed, this, &AC_BaseCharacter::ActivateSprint);
+	PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Released, this, &AC_BaseCharacter::DeactivateSprint);
 }
 
 void AC_BaseCharacter::MoveForward(float AxisValue)
 {
-	AddMovementInput(GetActorForwardVector() * AxisValue);
+	AddMovementInput(GetActorForwardVector() * AxisValue / CurrentMovementType);
 }
 
 void AC_BaseCharacter::MoveSideways(float AxisValue)
 {
-	AddMovementInput(GetActorRightVector() * AxisValue);
+	AddMovementInput(GetActorRightVector() * AxisValue / CurrentMovementType);
+}
+
+void AC_BaseCharacter::ActivateSprint()
+{
+	CurrentMovementType = 1;
+}
+
+void AC_BaseCharacter::DeactivateSprint()
+{
+	CurrentMovementType = 2;
 }
 

@@ -29,5 +29,9 @@ public:
 private:
 	void MoveForward(float AxisValue);
 	void MoveSideways(float AxisValue);
+	void ActivateSprint();
+	void DeactivateSprint();
 
+	// Walk - 2 || Sprint - 1
+	int32 CurrentMovementType = 2;
 };
