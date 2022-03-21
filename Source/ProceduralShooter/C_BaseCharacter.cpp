@@ -2,6 +2,7 @@
 
 
 #include "C_BaseCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AC_BaseCharacter::AC_BaseCharacter()
@@ -15,37 +16,26 @@ AC_BaseCharacter::AC_BaseCharacter()
 void AC_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 }
 
 // Called every frame
 void AC_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (PlayerPawn) {
+		FVector Location = PlayerPawn->GetActorLocation();
+		UE_LOG(LogTemp, Error, TEXT("%f"), Location.X);
+	}
+	
 }
 
 // Called to bind functionality to input
 void AC_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AC_BaseCharacter::MoveForward);
-	PlayerInputComponent->BindAxis(TEXT("MoveSideways"), this, &AC_BaseCharacter::MoveSideways);
-	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis(TEXT("LookSideways"), this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Pressed, this, &AC_BaseCharacter::ActivateSprint);
-	PlayerInputComponent->BindAction(TEXT("Sprint"), IE_Released, this, &AC_BaseCharacter::DeactivateSprint);
 }
 
-void AC_BaseCharacter::MoveForward(float AxisValue)
-{
-	AddMovementInput(GetActorForwardVector() * AxisValue / CurrentMovementType);
-}
-
-void AC_BaseCharacter::MoveSideways(float AxisValue)
-{
-	AddMovementInput(GetActorRightVector() * AxisValue / CurrentMovementType);
-}
 
 void AC_BaseCharacter::ActivateSprint()
 {

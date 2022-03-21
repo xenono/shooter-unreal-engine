@@ -27,11 +27,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	void MoveForward(float AxisValue);
-	void MoveSideways(float AxisValue);
 	void ActivateSprint();
 	void DeactivateSprint();
-
+	APawn* PlayerPawn;
 	// Walk - 2 || Sprint - 1
 	int32 CurrentMovementType = 2;
 };
