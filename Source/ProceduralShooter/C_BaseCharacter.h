@@ -27,6 +27,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+	void MoveForward(float AxisValue);
+	void MoveRight(float AxisValue);
+	void StartJump();
+	void StopJump();
 	void ActivateSprint();
 	void DeactivateSprint();
 	APawn* PlayerPawn;

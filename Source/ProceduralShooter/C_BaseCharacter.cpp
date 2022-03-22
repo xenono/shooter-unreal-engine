@@ -3,6 +3,7 @@
 
 #include "C_BaseCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AC_BaseCharacter::AC_BaseCharacter()
@@ -16,17 +17,12 @@ AC_BaseCharacter::AC_BaseCharacter()
 void AC_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 }
 
 // Called every frame
 void AC_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (PlayerPawn) {
-		FVector Location = PlayerPawn->GetActorLocation();
-		UE_LOG(LogTemp, Error, TEXT("%f"), Location.X);
-	}
 	
 }
 
@@ -34,8 +30,34 @@ void AC_BaseCharacter::Tick(float DeltaTime)
 void AC_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAction(TEXT("Jump"),EInputEvent::IE_Pressed,this,&AC_BaseCharacter::StartJump);
+	PlayerInputComponent->BindAction(TEXT("Jump"),EInputEvent::IE_Released,this,&AC_BaseCharacter::StopJump);
+	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AC_BaseCharacter::MoveForward);
+	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AC_BaseCharacter::MoveRight);
 }
 
+void AC_BaseCharacter::MoveForward(float AxisValue)
+{
+	FRotator CharacterRotator = GetControlRotation();
+	AddMovementInput(UKismetMathLibrary::GetForwardVector(CharacterRotator) * AxisValue);
+}
+
+void AC_BaseCharacter::MoveRight(float AxisValue)
+{
+	FRotator CharacterRotator = GetControlRotation();
+	AddMovementInput(UKismetMathLibrary::GetRightVector(CharacterRotator) * AxisValue);
+}
+
+void AC_BaseCharacter::StartJump()
+{
+	Jump();
+}
+
+void AC_BaseCharacter::StopJump()
+{
+	StopJumping();
+}
 
 void AC_BaseCharacter::ActivateSprint()
 {
