@@ -6,12 +6,13 @@
 #include "GameFramework/GameModeBase.h"
 #include "ProceduralShooterGameModeBase.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class PROCEDURALSHOOTER_API AProceduralShooterGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	AProceduralShooterGameModeBase();
+	virtual void Tick(float DeltaSeconds);
+
 };

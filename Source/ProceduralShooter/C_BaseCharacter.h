@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "C_BaseCharacter.generated.h"
 
+constexpr auto AIM = 3;
+constexpr auto RUN = 1;
+
 UCLASS()
 class PROCEDURALSHOOTER_API AC_BaseCharacter : public ACharacter
 {
@@ -26,14 +29,24 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintPure)
+		bool IsAiming() const;
+	//UFUNCTION(BlueprintCallable)
+	int32 CurrentMovementType = RUN;
 private:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 	void StartJump();
 	void StopJump();
+	void StartAiming();
+	void StopAiming();
 	void ActivateSprint();
 	void DeactivateSprint();
+	void LookUpRate(float AxisValue);
+	void LookSidewaysRate(float AxisValue);
 	APawn* PlayerPawn;
-	// Walk - 2 || Sprint - 1
-	int32 CurrentMovementType = 2;
+	UCharacterMovementComponent* MovementComponent = nullptr;	
+	
+	UPROPERTY(EditAnywhere)
+	int32 RotationRate = 10.f;
 };
