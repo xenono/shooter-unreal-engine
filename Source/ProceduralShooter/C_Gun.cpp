@@ -4,6 +4,7 @@
 #include "C_Gun.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/Actor.h"
 #include "DrawDebugHelpers.h"
 
 // Sets default values
@@ -13,9 +14,6 @@ AC_Gun::AC_Gun()
 	PrimaryActorTick.bCanEverTick = true;
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	SetRootComponent(Root);
-	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(Root);
-
 }
 
 // Called when the game starts or when spawned
@@ -31,8 +29,35 @@ void AC_Gun::Tick(float DeltaTime)
 }
 
 void AC_Gun::PullTrigger() {
-	DrawDebugBox(GetWorld(), GetActorLocation(), FVector(2,2,2), FColor::Red, true);
-	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("Muzzle_01"));
-	UGameplayStatics::SpawnSoundAttached(MuzzleSound, Mesh, TEXT("Muzzle_01"));
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),MuzzleFlash,GetActorTransform());
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), MuzzleSound, GetActorLocation());
+	FHitResult Hit;
+	FVector ShotDirection;
+	bool hitSuccess = BulletTrace(Hit, ShotDirection);
+	if (hitSuccess) {
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitEffect, Hit.Location, ShotDirection.Rotation());
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, Hit.Location);
+	}
+}
+
+bool AC_Gun::BulletTrace(FHitResult &Hit, FVector& ShotDirection) {
+	AController* OwnerController = GetOwnerController();
+	if (!OwnerController) return false;
+	FVector Location(0);
+	FRotator Rotation(0);
+	OwnerController->GetPlayerViewPoint(Location, Rotation);
+	ShotDirection = -Rotation.Vector();
+	FVector End = Location + Rotation.Vector() * MaxRange;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(GetOwner());
+	return GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1, Params);
+}
+
+AController* AC_Gun::GetOwnerController() const 
+{
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if (!OwnerPawn) return nullptr;
+	return OwnerPawn->GetController();
 }
 

@@ -23,14 +23,23 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void PullTrigger();
+	
 private:
+	bool BulletTrace(FHitResult& Hit, FVector& ShotDirection);
+	AController* GetOwnerController() const;
+
 	UPROPERTY(VisibleAnywhere)
 		USceneComponent* Root;
-	UPROPERTY(VisibleAnywhere)
-		USkeletalMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere)
 		class UParticleSystem* MuzzleFlash;
 	UPROPERTY(EditAnywhere)
 		class USoundBase* MuzzleSound;
+
+	UPROPERTY(EditAnywhere)
+		UParticleSystem* HitEffect;
+	UPROPERTY(EditAnywhere)
+		USoundBase* HitSound;
+	UPROPERTY(EditAnywhere)
+		float MaxRange = 5000.f;
 };
