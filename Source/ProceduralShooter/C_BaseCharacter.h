@@ -44,9 +44,15 @@ private:
 	void DeactivateSprint();
 	void LookUpRate(float AxisValue);
 	void LookSidewaysRate(float AxisValue);
+	void Shoot();
 	APawn* PlayerPawn;
 	UCharacterMovementComponent* MovementComponent = nullptr;	
 	
 	UPROPERTY(EditAnywhere)
 	int32 RotationRate = 10.f;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class AC_Gun> GunClass;
+	UPROPERTY()
+		AC_Gun* Gun;
 };

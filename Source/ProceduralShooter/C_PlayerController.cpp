@@ -16,9 +16,6 @@ void AC_PlayerController::BeginPlay()
 	if (!CrosshairWidget) {
 		UE_LOG(LogTemp, Warning, TEXT("No crosshar widget"));
 	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Crosshar widget has been found"));
-	}
 }
 
 void AC_PlayerController::SetupInputComponent()

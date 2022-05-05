@@ -2,7 +2,9 @@
 
 
 #include "C_BaseCharacter.h"
+#include "C_Gun.h"
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -17,9 +19,10 @@ AC_BaseCharacter::AC_BaseCharacter()
 void AC_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	//MovementComponent = Cast<UCharacterMovementComponent>(GetDefaultSubobjectByName(TEXT("CharacterMovement")));
 	MovementComponent = this->GetCharacterMovement();
+	Gun = GetWorld()->SpawnActor<AC_Gun>(GunClass);
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Muzzle_01"));
+	Gun->SetOwner(this);
 }
 
 // Called every frame
@@ -49,6 +52,8 @@ void AC_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAction(TEXT("Aim"),EInputEvent::IE_Pressed,this,&AC_BaseCharacter::StartAiming);
 	PlayerInputComponent->BindAction(TEXT("Aim"),EInputEvent::IE_Released,this,&AC_BaseCharacter::StopAiming);
+
+	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Pressed, this, &AC_BaseCharacter::Shoot);
 
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AC_BaseCharacter::MoveForward);
 	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AC_BaseCharacter::MoveRight);
@@ -126,5 +131,10 @@ void AC_BaseCharacter::DeactivateSprint()
 
 bool AC_BaseCharacter::IsAiming() const {
 	return CurrentMovementType == AIM;
+}
+
+void AC_BaseCharacter::Shoot() {
+	if (CurrentMovementType != AIM) return;
+	Gun->PullTrigger();
 }
 
