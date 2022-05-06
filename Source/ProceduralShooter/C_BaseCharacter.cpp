@@ -6,6 +6,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/CapsuleComponent.h"
+#include "ProceduralShooterGameModeBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -23,6 +25,7 @@ void AC_BaseCharacter::BeginPlay()
 	Gun = GetWorld()->SpawnActor<AC_Gun>(GunClass);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Muzzle_01"));
 	Gun->SetOwner(this);
+	Health = MaxHealth;
 }
 
 // Called every frame
@@ -133,8 +136,33 @@ bool AC_BaseCharacter::IsAiming() const {
 	return CurrentMovementType == AIM;
 }
 
+bool AC_BaseCharacter::IsDead() const
+{
+	if (Health <= 0) return true;
+	return false;
+}
+
+float AC_BaseCharacter::GetHealthPercentage() const 
+{
+	return Health / MaxHealth;
+}
+
 void AC_BaseCharacter::Shoot() {
 	if (CurrentMovementType != AIM) return;
 	Gun->PullTrigger();
+}
+
+float  AC_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) {
+	float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageApplied = FMath::Min(Health, DamageApplied);
+	Health -= DamageApplied;
+	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+	if (IsDead()) {
+		AProceduralShooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AProceduralShooterGameModeBase>();
+		//if (GameMode) GameMode->PawnKilled(this);
+		DetachFromControllerPendingDestroy();
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+	return DamageApplied;
 }
 

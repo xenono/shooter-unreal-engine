@@ -37,6 +37,12 @@ void AC_Gun::PullTrigger() {
 	if (hitSuccess) {
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), HitEffect, Hit.Location, ShotDirection.Rotation());
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), HitSound, Hit.Location);
+
+		AActor* HitActor = Hit.GetActor();
+		AController* OwnerController = GetOwnerController();
+		if (!HitActor || !OwnerController) return;
+		FPointDamageEvent DamageEvent(GunDamage, Hit, ShotDirection, nullptr);
+		HitActor->TakeDamage(GunDamage, DamageEvent, OwnerController, this);
 	}
 }
 
@@ -59,5 +65,9 @@ AController* AC_Gun::GetOwnerController() const
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
 	if (!OwnerPawn) return nullptr;
 	return OwnerPawn->GetController();
+}
+
+float AC_Gun::GetGunDamage() {
+	return GunDamage;
 }
 

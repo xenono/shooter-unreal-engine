@@ -31,6 +31,10 @@ public:
 
 	UFUNCTION(BlueprintPure)
 		bool IsAiming() const;
+	UFUNCTION(BlueprintPure)
+		bool IsDead() const;
+	UFUNCTION(BlueprintPure)
+		float GetHealthPercentage() const;
 	//UFUNCTION(BlueprintCallable)
 	int32 CurrentMovementType = RUN;
 private:
@@ -45,11 +49,16 @@ private:
 	void LookUpRate(float AxisValue);
 	void LookSidewaysRate(float AxisValue);
 	void Shoot();
+	float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
 	APawn* PlayerPawn;
 	UCharacterMovementComponent* MovementComponent = nullptr;	
 	
 	UPROPERTY(EditAnywhere)
 	int32 RotationRate = 10.f;
+	UPROPERTY(EditAnywhere)
+		float Health;
+	UPROPERTY(EditAnywhere)
+		float MaxHealth = 100.f;
 
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class AC_Gun> GunClass;

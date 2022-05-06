@@ -23,6 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void PullTrigger();
+	float GetGunDamage();
 	
 private:
 	bool BulletTrace(FHitResult& Hit, FVector& ShotDirection);
@@ -42,4 +43,6 @@ private:
 		USoundBase* HitSound;
 	UPROPERTY(EditAnywhere)
 		float MaxRange = 5000.f;
+	UPROPERTY(EditAnywhere)
+		float GunDamage = 10.f;
 };
