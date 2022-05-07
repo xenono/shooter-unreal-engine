@@ -35,6 +35,10 @@ public:
 		bool IsDead() const;
 	UFUNCTION(BlueprintPure)
 		float GetHealthPercentage() const;
+	UFUNCTION(BlueprintPure)
+		int32 GetBulletsInMagazine();
+	UFUNCTION(BlueprintPure)
+		int32 GetMagazineSize();
 	//UFUNCTION(BlueprintCallable)
 	int32 CurrentMovementType = RUN;
 private:

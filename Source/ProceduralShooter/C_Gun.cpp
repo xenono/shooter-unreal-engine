@@ -20,6 +20,12 @@ AC_Gun::AC_Gun()
 void AC_Gun::BeginPlay()
 {
 	Super::BeginPlay();
+	BindToInput();
+	if (!ErrorSound || !MuzzleFlash || !MuzzleSound || !HitEffect) {
+		UE_LOG(LogTemp, Error, TEXT("Sound or particle system not found!"));
+	}
+	BulletsInMagazine = MagazineSize;
+
 }
 
 // Called every frame
@@ -28,7 +34,23 @@ void AC_Gun::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void AC_Gun::BindToInput()
+{
+	InputComponent = NewObject<UInputComponent>(this);
+	InputComponent->RegisterComponent();
+	if (InputComponent) {
+		InputComponent->BindAction(TEXT("Reload"), EInputEvent::IE_Pressed, this, &AC_Gun::Reload);
+		EnableInput(GetWorld()->GetFirstPlayerController());
+	}
+
+}
+
 void AC_Gun::PullTrigger() {
+	
+	if (BulletsInMagazine <= 0) {
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ErrorSound, GetActorLocation());
+		return;
+	}
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),MuzzleFlash,GetActorTransform());
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), MuzzleSound, GetActorLocation());
 	FHitResult Hit;
@@ -44,6 +66,7 @@ void AC_Gun::PullTrigger() {
 		FPointDamageEvent DamageEvent(GunDamage, Hit, ShotDirection, nullptr);
 		HitActor->TakeDamage(GunDamage, DamageEvent, OwnerController, this);
 	}
+	BulletsInMagazine--;
 }
 
 bool AC_Gun::BulletTrace(FHitResult &Hit, FVector& ShotDirection) {
@@ -67,7 +90,21 @@ AController* AC_Gun::GetOwnerController() const
 	return OwnerPawn->GetController();
 }
 
+void AC_Gun::Reload()
+{
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), CoolingDownSound, GetActorLocation());
+	BulletsInMagazine = MagazineSize;
+}
+
 float AC_Gun::GetGunDamage() {
 	return GunDamage;
 }
 
+int32 AC_Gun::GetCurrentNumberOfBulletsInMagazine() {
+	return BulletsInMagazine;
+}
+
+
+int32 AC_Gun::GetMagazineSize() {
+	return MagazineSize;
+}

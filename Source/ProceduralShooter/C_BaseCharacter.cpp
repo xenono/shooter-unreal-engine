@@ -147,6 +147,16 @@ float AC_BaseCharacter::GetHealthPercentage() const
 	return Health / MaxHealth;
 }
 
+int32 AC_BaseCharacter::GetBulletsInMagazine()
+{
+	return Gun->GetCurrentNumberOfBulletsInMagazine();
+}
+
+int32 AC_BaseCharacter::GetMagazineSize()
+{
+	return Gun->GetMagazineSize();
+}
+
 void AC_BaseCharacter::Shoot() {
 	if (CurrentMovementType != AIM) return;
 	Gun->PullTrigger();

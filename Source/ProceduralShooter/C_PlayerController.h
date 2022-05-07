@@ -22,4 +22,8 @@ private:
 		TSubclassOf<class UUserWidget> CrosshairWidgetClass;
 	UPROPERTY()
 		UUserWidget* CrosshairWidget;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UUserWidget> HealthWidgetClass;
+	UPROPERTY()
+		UUserWidget* HealthWidget;
 };

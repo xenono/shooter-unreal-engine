@@ -22,12 +22,16 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void BindToInput();
 	void PullTrigger();
 	float GetGunDamage();
+	int32 GetCurrentNumberOfBulletsInMagazine();
+	int32 GetMagazineSize();
 	
 private:
 	bool BulletTrace(FHitResult& Hit, FVector& ShotDirection);
 	AController* GetOwnerController() const;
+	void Reload();
 
 	UPROPERTY(VisibleAnywhere)
 		USceneComponent* Root;
@@ -36,6 +40,10 @@ private:
 		class UParticleSystem* MuzzleFlash;
 	UPROPERTY(EditAnywhere)
 		class USoundBase* MuzzleSound;
+	UPROPERTY(EditAnywhere)
+		class USoundBase* ErrorSound;
+	UPROPERTY(EditAnywhere)
+		class USoundBase* CoolingDownSound;
 
 	UPROPERTY(EditAnywhere)
 		UParticleSystem* HitEffect;
@@ -45,4 +53,9 @@ private:
 		float MaxRange = 5000.f;
 	UPROPERTY(EditAnywhere)
 		float GunDamage = 10.f;
+	UPROPERTY(EditAnywhere)
+		int32 MagazineSize = 30;
+	UPROPERTY()
+		int32 BulletsInMagazine = 30;
+
 };

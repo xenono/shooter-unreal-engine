@@ -14,8 +14,15 @@ void AC_PlayerController::BeginPlay()
 
 	CrosshairWidget = CreateWidget(this, CrosshairWidgetClass);
 	if (!CrosshairWidget) {
-		UE_LOG(LogTemp, Warning, TEXT("No crosshar widget"));
+		UE_LOG(LogTemp, Warning, TEXT("No crosshair widget"));
+		return;
 	}
+	HealthWidget = CreateWidget(this, HealthWidgetClass);
+	if (!HealthWidget) {
+		UE_LOG(LogTemp, Warning, TEXT("No health widget"));
+		return;
+	}
+	HealthWidget->AddToViewport();
 }
 
 void AC_PlayerController::SetupInputComponent()
