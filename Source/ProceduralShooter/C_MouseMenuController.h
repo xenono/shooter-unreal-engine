@@ -19,11 +19,27 @@ public:
 	virtual void BeginPlay() override;
 private:
 	UFUNCTION()
+		void BackButtonOnClick();
+	UFUNCTION()
 	void PlayButtonOnClick();
+	UFUNCTION()
+	void ExitButtonOnClick();
+	UFUNCTION()
+	void ControlsButtonOnClick();
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class UUserWidget> MenuWidgetClass;
 	UPROPERTY()
 		UUserWidget* MenuWidget;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UUserWidget> ControlsWidgetClass;
+	UPROPERTY()
+		UUserWidget* ControlsWidget;
 	UPROPERTY()
 		class UButton* PlayButton;
+	UPROPERTY()
+		UButton* ExitButton;
+	UPROPERTY()
+		UButton* ControlsButton;
+	UPROPERTY()
+		UButton* BackButton;
 };
