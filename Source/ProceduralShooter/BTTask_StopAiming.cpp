@@ -1,15 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_StartAiming.h"
+#include "BTTask_StopAiming.h"
 #include "AIController.h"
 #include "C_BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-UBTTask_StartAiming::UBTTask_StartAiming() {
-	NodeName = TEXT("Start Aiming");
+UBTTask_StopAiming::UBTTask_StopAiming() {
+	NodeName = TEXT("Stop Aiming");
 }
-EBTNodeResult::Type UBTTask_StartAiming::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTask_StopAiming::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 	if (!OwnerComp.GetAIOwner()) {
@@ -21,8 +21,8 @@ EBTNodeResult::Type UBTTask_StartAiming::ExecuteTask(UBehaviorTreeComponent& Own
 		UE_LOG(LogTemp, Error, TEXT("Character pawn not found in BTTask_StartAiming"));
 		return EBTNodeResult::Failed;
 	}
-	Character->GetCharacterMovement()->MaxWalkSpeed = 300;
-	Character->StartAiming();
+	Character->GetCharacterMovement()->MaxWalkSpeed = 600;
+	Character->StopAiming();
 	UE_LOG(LogTemp, Warning, TEXT("%i"), Character->CurrentMovementType);
 	return EBTNodeResult::Succeeded;
 }

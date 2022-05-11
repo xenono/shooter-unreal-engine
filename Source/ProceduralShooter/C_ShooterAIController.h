@@ -15,6 +15,7 @@ class PROCEDURALSHOOTER_API AC_ShooterAIController : public AAIController
 	GENERATED_BODY()
 public:
 		virtual void BeginPlay() override;
+		virtual void Tick(float DeltaTime) override;
 private:
 	UPROPERTY(EditAnywhere)
 		class UBehaviorTree* AIBehavior;

@@ -25,6 +25,7 @@ void AC_BaseCharacter::BeginPlay()
 	Gun = GetWorld()->SpawnActor<AC_Gun>(GunClass);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Muzzle_01"));
 	Gun->SetOwner(this);
+	CurrentMovementType = RUN;
 	Health = MaxHealth;
 }
 

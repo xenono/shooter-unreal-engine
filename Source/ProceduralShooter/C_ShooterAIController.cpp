@@ -4,17 +4,19 @@
 #include "C_ShooterAIController.h"
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "C_BaseCharacter.h"
 
 void AC_ShooterAIController::BeginPlay() {
 	Super::BeginPlay();
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	if (AIBehavior) {
-		
 		RunBehaviorTree(AIBehavior);
-		if (GetBlackboardComponent()) {
-			UE_LOG(LogTemp, Warning, TEXT("XDD"));
-			GetBlackboardComponent()->SetValueAsVector("X", FVector(-610, 920, 117));
-
-		}
 	}
+	
+}
+
+void AC_ShooterAIController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+	AC_BaseCharacter* xd = Cast<AC_BaseCharacter>(GetPawn());
+	//UE_LOG(LogTemp, Warning, TEXT("%f"), xd->CurrentMovementType);
 }
