@@ -22,6 +22,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -41,18 +42,20 @@ public:
 		int32 GetMagazineSize();
 	//UFUNCTION(BlueprintCallable)
 	int32 CurrentMovementType = RUN;
+	void StartAiming();
+	void StopAiming();
+	void Shoot();
+
 private:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
 	void StartJump();
 	void StopJump();
-	void StartAiming();
-	void StopAiming();
+	
 	void ActivateSprint();
 	void DeactivateSprint();
 	void LookUpRate(float AxisValue);
 	void LookSidewaysRate(float AxisValue);
-	void Shoot();
 	float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
 	APawn* PlayerPawn;
 	UCharacterMovementComponent* MovementComponent = nullptr;	
