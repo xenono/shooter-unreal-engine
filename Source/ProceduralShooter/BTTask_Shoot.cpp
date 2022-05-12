@@ -4,6 +4,7 @@
 #include "BTTask_Shoot.h"
 #include "AIController.h"
 #include "C_BaseCharacter.h"
+#include "C_Gun.h"
 
 UBTTask_Shoot::UBTTask_Shoot() {
     NodeName = TEXT("Shoot");
@@ -21,5 +22,7 @@ EBTNodeResult::Type UBTTask_Shoot::ExecuteTask(UBehaviorTreeComponent& OwnerComp
 		return EBTNodeResult::Failed;
 	}
 	Character->Shoot();
+	if (Character->GetBulletsInMagazine() == 0)
+		Character->GetGun()->Reload();
     return EBTNodeResult::Succeeded;
 }

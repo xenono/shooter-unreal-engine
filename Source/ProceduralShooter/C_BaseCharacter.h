@@ -45,6 +45,7 @@ public:
 	void StartAiming();
 	void StopAiming();
 	void Shoot();
+	class AC_Gun* GetGun();
 
 private:
 	void MoveForward(float AxisValue);
@@ -68,7 +69,7 @@ private:
 		float MaxHealth = 100.f;
 
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<class AC_Gun> GunClass;
+		TSubclassOf<AC_Gun> GunClass;
 	UPROPERTY()
 		AC_Gun* Gun;
 };

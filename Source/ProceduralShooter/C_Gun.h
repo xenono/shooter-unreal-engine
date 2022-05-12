@@ -27,11 +27,12 @@ public:
 	float GetGunDamage();
 	int32 GetCurrentNumberOfBulletsInMagazine();
 	int32 GetMagazineSize();
+	void Reload();
 	
 private:
 	bool BulletTrace(FHitResult& Hit, FVector& ShotDirection);
 	AController* GetOwnerController() const;
-	void Reload();
+
 
 	UPROPERTY(VisibleAnywhere)
 		USceneComponent* Root;

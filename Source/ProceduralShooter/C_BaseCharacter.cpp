@@ -163,6 +163,12 @@ void AC_BaseCharacter::Shoot() {
 	Gun->PullTrigger();
 }
 
+AC_Gun* AC_BaseCharacter::GetGun()
+{
+	if (!Gun)return nullptr;
+	return Gun;
+}
+
 float  AC_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) {
 	float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	DamageApplied = FMath::Min(Health, DamageApplied);
