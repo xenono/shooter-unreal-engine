@@ -14,5 +14,7 @@ class PROCEDURALSHOOTER_API AProceduralShooterGameModeBase : public AGameModeBas
 public:
 	AProceduralShooterGameModeBase();
 	virtual void Tick(float DeltaSeconds);
+	void PawnKilled(APawn* KilledPawn);
+	void EndGame(bool isPlayerWinner);
 
 };

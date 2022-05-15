@@ -17,6 +17,12 @@ void AC_ShooterAIController::BeginPlay() {
 
 void AC_ShooterAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	AC_BaseCharacter* xd = Cast<AC_BaseCharacter>(GetPawn());
-	//UE_LOG(LogTemp, Warning, TEXT("%f"), xd->CurrentMovementType);
+}
+
+bool AC_ShooterAIController::IsDead() {
+	AC_BaseCharacter* ControlledCharacter = Cast<AC_BaseCharacter>(GetPawn());
+	if (ControlledCharacter) {
+		return ControlledCharacter->IsDead();
+	}
+	return true;
 }

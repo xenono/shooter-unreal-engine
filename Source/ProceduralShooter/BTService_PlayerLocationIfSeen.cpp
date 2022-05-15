@@ -27,7 +27,6 @@ void UBTService_PlayerLocationIfSeen::TickNode(UBehaviorTreeComponent& OwnerComp
 		OwnerComp.GetBlackboardComponent()->SetValueAsObject(GetSelectedBlackboardKey(), PlayerPawn);
 		AActor* Player = Cast<AActor>(OwnerComp.GetBlackboardComponent()->GetValueAsObject("Player"));
 		FVector PlayerLocation = Player->GetActorLocation();
-		UE_LOG(LogTemp, Warning, TEXT("%f %f %f"), PlayerLocation.X, PlayerLocation.Y, PlayerLocation.Z);
 	}
 	else {
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());

@@ -173,10 +173,9 @@ float  AC_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	DamageApplied = FMath::Min(Health, DamageApplied);
 	Health -= DamageApplied;
-	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
 	if (IsDead()) {
 		AProceduralShooterGameModeBase* GameMode = GetWorld()->GetAuthGameMode<AProceduralShooterGameModeBase>();
-		//if (GameMode) GameMode->PawnKilled(this);
+		if (GameMode) GameMode->PawnKilled(this);
 		DetachFromControllerPendingDestroy();
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}

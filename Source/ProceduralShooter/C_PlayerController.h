@@ -14,8 +14,10 @@ public:
 	AC_PlayerController();
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+	virtual void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 	void StartAiming();
 	void StopAiming();
+	void RedirectToMenu();
 private:
 
 	UPROPERTY(EditAnywhere)
@@ -26,4 +28,15 @@ private:
 		TSubclassOf<class UUserWidget> HealthWidgetClass;
 	UPROPERTY()
 		UUserWidget* HealthWidget;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UUserWidget> WinScreenWidgetClass;
+	UPROPERTY()
+		UUserWidget* WinScreenWidget;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UUserWidget> LoseScreenWidgetClass;
+	UPROPERTY()
+		UUserWidget* LoseScreenWidget;
+	UPROPERTY(EditAnywhere)
+		float RestartDelay = 5.f;
+	FTimerHandle RestartTimer;
 };

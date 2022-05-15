@@ -23,6 +23,5 @@ EBTNodeResult::Type UBTTask_StopAiming::ExecuteTask(UBehaviorTreeComponent& Owne
 	}
 	Character->GetCharacterMovement()->MaxWalkSpeed = 600;
 	Character->StopAiming();
-	UE_LOG(LogTemp, Warning, TEXT("%i"), Character->CurrentMovementType);
 	return EBTNodeResult::Succeeded;
 }

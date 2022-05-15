@@ -64,7 +64,6 @@ void AC_MouseMenuController::BackButtonOnClick()
 
 void AC_MouseMenuController::PlayButtonOnClick()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Click"));
 	UGameplayStatics::OpenLevel(GetWorld(), FName("MainLevel"));
 }
 

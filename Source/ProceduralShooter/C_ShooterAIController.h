@@ -16,6 +16,7 @@ class PROCEDURALSHOOTER_API AC_ShooterAIController : public AAIController
 public:
 		virtual void BeginPlay() override;
 		virtual void Tick(float DeltaTime) override;
+		bool IsDead();
 private:
 	UPROPERTY(EditAnywhere)
 		class UBehaviorTree* AIBehavior;
