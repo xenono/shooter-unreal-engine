@@ -181,4 +181,3 @@ float  AC_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	}
 	return DamageApplied;
 }
-

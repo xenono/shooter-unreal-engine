@@ -46,6 +46,8 @@ public:
 	void StopAiming();
 	void Shoot();
 	class AC_Gun* GetGun();
+	UPROPERTY(EditAnywhere)
+		float Health;
 
 private:
 	void MoveForward(float AxisValue);
@@ -63,8 +65,7 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	int32 RotationRate = 10.f;
-	UPROPERTY(EditAnywhere)
-		float Health;
+	
 	UPROPERTY(EditAnywhere)
 		float MaxHealth = 100.f;
 
