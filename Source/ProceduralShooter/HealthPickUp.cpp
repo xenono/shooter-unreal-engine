@@ -23,10 +23,9 @@ AHealthPickUp::AHealthPickUp()
 
 void AHealthPickUp::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {	
-	UE_LOG(LogTemp, Error, TEXT("Overlap triggered"));
 	AC_BaseCharacter* Player = Cast<AC_BaseCharacter>(OtherActor);
 	
-	Player->Health += 30.f;	
+	Player->Heal(HealStrength);
 	
 	Destroy();	
 	

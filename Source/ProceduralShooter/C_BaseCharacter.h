@@ -48,6 +48,7 @@ public:
 	class AC_Gun* GetGun();
 	UPROPERTY(EditAnywhere)
 		float Health;
+	void Heal(int32 HealValue);
 
 private:
 	void MoveForward(float AxisValue);

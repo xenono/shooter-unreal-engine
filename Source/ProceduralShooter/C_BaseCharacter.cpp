@@ -169,6 +169,16 @@ AC_Gun* AC_BaseCharacter::GetGun()
 	return Gun;
 }
 
+void AC_BaseCharacter::Heal(int32 HealValue)
+{
+	if (Health + HealValue >= MaxHealth) {
+		Health = MaxHealth;
+	}
+	else {
+		Health += HealValue;
+	}
+}
+
 float  AC_BaseCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) {
 	float DamageApplied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	DamageApplied = FMath::Min(Health, DamageApplied);
